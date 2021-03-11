@@ -38,6 +38,15 @@ class Interface
         @user = User.signup
     end
 
+    def change_password
+        puts "Enter the new password"
+        new_password = STDIN.gets.chomp
+        @user.update(password: new_password)
+        puts "You changed your password!"
+        sleep 1
+        main_menu
+    end
+
 
     def main_menu
         @user.reload
@@ -47,6 +56,7 @@ class Interface
         prompt.select "Please Choose From The Following" do |menu|
             menu.choice "Browse All Pokemon", -> {display_pokemon} 
             menu.choice "Browse Adopted Pokemon", -> {view_adopted_pokemon}
+            menu.choice "Change Password", -> {change_password}
             menu.choice "Exit", -> {exit_greeting}
         end
     end
