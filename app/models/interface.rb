@@ -17,7 +17,7 @@ class Interface
 
 
     def ask_for_login_or_signup
-        prompt.select "Would you like to login or register" do |menu|
+        prompt.select "Would you like to login or sign-up?" do |menu|
             menu.choice "Login", -> { login_converter }
             menu.choice "Signup", -> {signup_helper}
             menu.choice "Exit App", -> {first_exit_greeting}
@@ -76,12 +76,14 @@ class Interface
 
     def display_pokemon
         all_pokemon = Pokemon.all
-        prompt.select "Select a Pokemon to view details" do |menu|
+        box = TTY::Box.frame  "Select a Pokemon to view details ", padding: 1, align: :center
+        print box
+        prompt.select "", per_page: 20 do |menu|
             all_pokemon.each do |pokemon_inst|
                 menu.choice "#{pokemon_inst.species_name}", -> {
                     display_species(pokemon_inst)
                 } 
-                system 'clear'
+                # system 'clear'
             end
             menu.choice "Back to Main Menu", -> {main_menu}
         end
