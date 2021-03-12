@@ -30,7 +30,5 @@ class User < ActiveRecord::Base
         user_instance = User.create(username: username, password: password)
     end
 
-   
-
 end
 

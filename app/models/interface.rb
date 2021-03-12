@@ -20,6 +20,7 @@ class Interface
         prompt.select "Would you like to login or register" do |menu|
             menu.choice "Login", -> { login_converter }
             menu.choice "Signup", -> {signup_helper}
+            menu.choice "Exit App", -> {first_exit_greeting}
         end
     end
 
@@ -28,21 +29,25 @@ class Interface
         system 'clear'
         box = TTY::Box.frame  "Please Enter Your Username", padding: 1, align: :center
         print box
+        sleep 1
         @user = User.login_helper
     end
     
 
     def signup_helper
         system 'clear'
-        puts "You chose register"
+        box = TTY::Box.frame  "You chose register", padding: 1, align: :center
+        print box
         @user = User.signup
     end
 
     def change_password
-        puts "Enter the new password"
+        box = TTY::Box.frame  "Enter the new password", padding: 1, align: :center
+        print box
         new_password = STDIN.gets.chomp
         @user.update(password: new_password)
-        puts "You changed your password!"
+        box = TTY::Box.frame  "You changed your password!", padding: 1, align: :center
+        print box
         sleep 1
         main_menu
     end
@@ -103,7 +108,9 @@ class Interface
 
     def adopt_pokemon_helper(pokemon_inst)
         Adoption.create(user_id: @user.id, pokemon_id: pokemon_inst.id, happiness: 10)
-        puts "You have adopted #{pokemon_inst.species_name}"
+        system 'clear'
+        box = TTY::Box.frame  "You have adopted #{pokemon_inst.species_name}", padding: 1, align: :center
+        print box
         sleep 2
         main_menu
     end        
@@ -145,11 +152,20 @@ class Interface
             end
     end
 
-
     def exit_greeting
         system 'clear'
         box = TTY::Box.frame  "Thank you for choosing the Poke'doption Center. Goodbye #{@user.username}!", padding: 1, align: :center
         print box
+        sleep 3
+        system 'clear'
     end
-    
+
+    def first_exit_greeting
+        system 'clear'
+        box = TTY::Box.frame  "Thank you for choosing the Poke'doption Center. Goodbye!", padding: 1, align: :center
+        print box
+        sleep 3
+        system 'clear'
+    end
+   
 end
