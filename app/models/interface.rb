@@ -78,7 +78,7 @@ class Interface
         all_pokemon = Pokemon.all
         box = TTY::Box.frame  "Select a Pokemon to view details ", padding: 1, align: :center
         print box
-        prompt.select "", per_page: 20 do |menu|
+        prompt.select "", per_page: 30 do |menu|
             all_pokemon.each do |pokemon_inst|
                 menu.choice "#{pokemon_inst.species_name}", -> {
                     display_species(pokemon_inst)
